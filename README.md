@@ -4,3 +4,7 @@
 实验7 P172
 ## 9exp.asm
 实验9 P187
+## 10_1exp.asm 10_2exp.asm 10_3exp.asm
+实验10 P206
+## 1des.asm
+课程设计1 P211
