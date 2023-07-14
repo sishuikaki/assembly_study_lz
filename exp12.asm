@@ -5,7 +5,7 @@ code segment
 start:
     ;do安装程序
 
-        ;设置ds:di指向源地址
+        ;设置ds:si指向源地址
             mov ax,code
             mov ds,ax
             mov si,offset do0
