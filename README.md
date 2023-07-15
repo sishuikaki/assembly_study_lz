@@ -14,3 +14,5 @@
 实验12 P251
 ## exp13_1.asm exp13_2.asm exp13_3.asm
 实验13 P262
+## exp14.asm
+实验14 P271
