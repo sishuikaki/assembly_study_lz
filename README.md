@@ -37,7 +37,7 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
       <td align="left"><ins>14</ins>D=<ins>1110</ins>B</td>
       <td align="left"><ins>16</ins>D=<ins>1 0000</ins>B</td>
    </tr>
-</table>
+   </table>
 
 2. <ins>12</ins>H &emsp; <ins>1 0101</ins>B &emsp; <ins>1000 1111</ins>B &emsp; <ins>10 0000 0000</ins>B &emsp; <ins>1FF</ins>H  
 # 第2章
