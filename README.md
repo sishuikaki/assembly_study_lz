@@ -21,12 +21,25 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
 1. FFCH：4092D/1111,1111,1100B
 2. FFCH乘以27C0H：27B,6100H/10,0111,1011,0110,0001,0000,0000B
 ### 第1章习题
-1.  &emsp;                  |  &emsp;                 |  &emsp; 
-    -----                   | -----                   | -----
-    <u>5</u>D               | <u>C</u>H               | <u>15</u>D=<u>1111</u>B
-    <u>12</u>D=<u>1100</u>B | <u>10</u>D=<u>1010</u>B | <u>8</u>H=<u>1000</u>B
-    <u>11</u>D=<u>1011</u>B | <u>14</u>D=<u>1110</u>B | <u>16</u>D=<u>1 0000</u>B
-2. <u>12</u>H &emsp; <u>1 0101</u>B &emsp; <u>1000 1111</u>B &emsp; <u>10 0000 0000</u>B &emsp; <u>1FF</u>H
+1. <table>
+   <tr>
+      <td align="left"><ins>5</ins>D</td>
+      <td align="left"><ins>C</ins>H</td>
+      <td align="left"><ins>15</ins>D=<ins>1111</ins>B</td>
+   </tr>
+   <tr>
+      <td align="left"><ins>12</ins>D=<ins>1100</ins>B</td>
+      <td align="left"><ins>10</ins>D=<ins>1010</ins>B</td>
+      <td align="left"><ins>8</ins>H=<ins>1000</ins>B</td>
+   </tr>
+   <tr>
+      <td align="left"><ins>11</ins>D=<ins>1011</ins>B</td>
+      <td align="left"><ins>14</ins>D=<ins>1110</ins>B</td>
+      <td align="left"><ins>16</ins>D=<ins>1 0000</ins>B</td>
+   </tr>
+</table>
+
+2. <ins>12</ins>H &emsp; <ins>1 0101</ins>B &emsp; <ins>1000 1111</ins>B &emsp; <ins>10 0000 0000</ins>B &emsp; <ins>1FF</ins>H  
 # 第2章
 ### 第2章习题
 - 0 &emsp; FFFFF &emsp; $2^{20}$ &emsp; 1024 &emsp; 1
