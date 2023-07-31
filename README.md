@@ -170,3 +170,36 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
    cx=0，减去1次1后变成`...1111 1111 1111`，此时loop判断cx非0，跳转到delay，再减去1111,1111b次1后变成`...1111 0000 0000`，此时cx再一次等于0，loop跳出循环  
    1111 1111b=65535，65535+1=65536
 # 第8章
+### 检测点8.1
+1. ax=0xfff0  
+   `and [data],ax`后data的内容为0xaa50  
+   `or ax,[data]`后ax不变
+2. AC  
+   B错误，是先访问栈段，读取栈顶数据，再将SP的内容减2。出栈是入栈的反向操作
+3. ```x86asm
+   push ds
+   push bx
+   push ax
+   mov bx,ss
+   mov ds,bx   ;将ss赋值给ds
+   mov bx,sp
+   mov dx,[bx] ;此时ds:bx等同于ss:sp
+   pop ax
+   pop bx
+   pop ds
+   ```
+### 第8章习题
+1. 修改后
+   ```x86asm
+   ;以下计算1到100的和 
+   xor ax,ax
+   mov cx,100
+   @f:
+   add ax,cx
+   loop @f
+   ```
+2. 见github源文件[xt8-2.asm](https://github.com/sishuikaki/assembly_study/blob/main/xt8-2.asm)  
+   不足：1+2+...+1000=500500，除以10后小于65535，ax能够保存商，此时无需考虑除法溢出；  
+   但如果累加和的数值除以10后大于65535，ax不够保存商，此时会发生除法溢出；  
+   *此处应当做好知识屏蔽，如果感兴趣可以参考王爽的《汇编语言》一书中的实验10的2. 解决除法溢出的问题*
+# 第9章
