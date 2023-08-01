@@ -203,3 +203,47 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
    但如果累加和的数值除以10后大于65535，ax不够保存商，此时会发生除法溢出；  
    *如果感兴趣可以参考王爽的《汇编语言》一书中实验10的2. 解决除法溢出的问题。（注意：MASM和NASM语法有些许差异）*
 # 第9章
+### 检测点9.1
+1. 0x70
+2. 0x80
+3. 0
+> data1的vstart=0，lba相对于data1起始处的距离为0  
+> 注意`mov ax,lba`和`mov ax,[lba]`的区别  
+> 如果是`mov ax,lba`，那么ax将等于ds:[0]的内容
+4. 2
+> data2的vstart=0，lbc相对于data2起始处的距离为2
+5. 0x80
+> data3没有说明vstart=0，lbd相对于整个程序开头的距离为0x80
+### 检测点9.2
+1. `call label_proc`
+2. `call bx`
+3. `call [bx]`
+4. `call 0xf000:0x0002`
+5. `call far [0x80]`
+6. `call far [bx+di+0x08]`
+### 检测点9.3
+1. ax=0x2a95
+2. &nbsp;  
+   - a. `jmp label_proc`  
+   - b. `jmp bx`  
+   - c. `jmp [es:bx]`  
+      > 注意是附加段
+
+   - d. `jmp 0xf000:0x0002`  
+   - e. `jmp far [0x80]`  
+   - f. `jmp far [es:bx+di+0x08]`
+### 第9章习题
+1. 可以将第150到第154行代码改为
+   ```x86asm
+   mov ax,[es:code_2_segment]
+   mov [gotocode_2+2],ax
+   jmp far [gotocode_2]
+   gotocode_2 dw begin,0
+   ```
+2. 如果用户程序的实际长度小于等于512个字节，那么加载程序无法正常运行  
+   cx初始为0，执行一次`loop @2`后，cx变为0xffff，继续循环  
+   在`loop @2`这条命令设置断点后，按c即可进入下一次循环，观察每次运行到`loop @2`时ds或ax的值  
+   在循环到ds=0xb800时，屏幕文字将开始依次消失（ASCII码全为0）  
+   在循环到ds=0xfffe时，下一次循环时ds将会变成0  
+   在循环到ds=0x07a0时，下一次循环时0x7c00的指令被替换，加载程序无法正常运行
+# 第10章
