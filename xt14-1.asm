@@ -80,20 +80,20 @@ flush:
        ;将0x55aa55aa写入内存空间
        mov ebx,0x00100000   ;从0x0010 0000开始
        mov ecx,0x00100000   ;一次循环4字节，一共0x00100000次
-       write:
-              mov dword [es:ebx+4*ecx-4],0x55aa55aa    ;写入0x55aa55aa
+       write: ;倒序写入0x55aa55aa
+              mov dword [es:ebx+4*(ecx-1)],0x55aa55aa    ;ecx从0x10 0000到1，偏移量从0x0f ffff到0，所以ecx要减1
               loop write
 
        ;显示提示文字
        mov ecx,over - start
        mov ebx,start
        mov edi,160*1+2*35
-       call showstring
+       call showstring      ;显示正在检测中
 
        mov ecx,table - progressbar
        mov ebx,progressbar
        mov edi,160*2+31*2
-       call showstring
+       call showstring      ;显示进度条
 
        ;检测内存空间
        mov ebx,0x00100000   ;从0x0010 0000开始
@@ -102,34 +102,33 @@ flush:
        xor edx,edx          ;edx用于记录检测数
        check:
               mov eax,[es:ebx+4*ebp]
+              
               cmp eax,0x55aa55aa
               je check_ok
-              inc ebp
-              loop check
-              
-              check_ok:
-              inc edx
-              call updataprogressbar
-              inc ebp
-              loop check
 
-       ;显示结束提示
+              ;没有检测到0x55aa55aa
+              inc ebp
+              loop check
+              jmp check_end ;循环结束后退出循环
+              
+              ;检测到0x55aa55aa
+              check_ok:
+              mov dword [es:ebx+4*ebp],0xaa55aa55       ;写入0xaa55aa55表示已检测
+              inc edx       ;已检测数+1
+              call updataprogressbar      ;更新进度条
+              inc ebp
+              loop check
+       check_end:
+
+       ;提示检测已结束
        mov ecx,progressbar - over
        mov ebx,over
-       mov edi,160*1+2*35
+       mov edi,160*1+2*35   ;需要与检测中的提示位置相同，因为要替换掉原来的提示
        call showstring
 
-
-       
        hlt
 
-
-
-
-
-
-
-
+;-------------------------------------------------------------------------------
 ;显示字符串。es:ebx指向字符串开头，edi表示显存偏移量，ecx表示字符个数
 showstring:
        push esi
@@ -148,21 +147,21 @@ showstring:
        pop esi
        ret
 
-;更新progressbar的数据。
+;更新进度条。
 updataprogressbar:
        push ecx
        push esi
        push eax
        push edx
 
-       mov ecx,6
+       mov ecx,6     ;进度条有6个字符要替换
        xor esi,esi
-       updataprogressbar_s:
+       updataprogressbar_s: ;先把edx最低位显示出来，再让edx右移，像这样依次循环
               mov eax,edx
-              and eax,1111b
+              and eax,1111b ;只保留edx的最后一位
               mov al,[table+eax]
-              mov [es:0xb8000+160*2+(31+2)*2+2*ecx-2],al
-              shr edx,4
+              mov [es:0xb8000+160*2+(31+2)*2+2*(ecx-1)],al     ;ecx从6到1，偏移量从5到0，所以ecx要减1
+              shr edx,4     ;十六进制的1位，是二进制的4位
               loop updataprogressbar_s
 
        pop edx
@@ -172,13 +171,13 @@ updataprogressbar:
        ret
 
 ;-------------------------------------------------------------------------------
-start         db 'checking'
-over          db '  done! '
-progressbar   db '0x000000 / 0x100000'
-table         db '0123456789abcdef'
+start         db 'checking'               ;提示正在检测中
+over          db '  done! '               ;提示检测结束。宽度不能小于start，因为要覆盖
+progressbar   db '0x000000 / 0x100000'    ;进度条
+table         db '0123456789abcdef'       ;字符数组，从数值1~f转换为字符1~f
 ;-------------------------------------------------------------------------------
-pgdt             dw 0
-                     dd 0x00007e00      ;GDT的物理地址
+pgdt          dw 0
+              dd 0x00007e00        ;GDT的物理地址
 ;-------------------------------------------------------------------------------                             
-times 510-($-$$) db 0
+times 510-($-$$)     db 0
                      db 0x55,0xaa

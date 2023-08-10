@@ -165,7 +165,7 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
    - 负数：
      - 0xff 0x80 0xf0 0x97
      - 0xfff0 0xc5bc
-2. 见github源文件[xt7-2.asm](https://github.com/sishuikaki/assembly_study/blob/main/xt7-2.asm)
+2. 见github源文件[xt7-2.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt7-2.asm)
 3. 65536次，即0x10000次  
    cx=0，减去1次1后变成`...1111 1111 1111`，此时loop判断cx非0，跳转到delay，再减去1111,1111b次1后变成`...1111 0000 0000`，此时cx再一次等于0，loop跳出循环  
    1111 1111b=65535，65535+1=65536
@@ -198,7 +198,7 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
    add ax,cx
    loop @f
    ```
-2. 见github源文件[xt8-2.asm](https://github.com/sishuikaki/assembly_study/blob/main/xt8-2.asm)  
+2. 见github源文件[xt8-2.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt8-2.asm)  
    不足：1+2+...+1000=500500，除以10后小于65535，ax能够保存商，此时无需考虑除法溢出；  
    但如果累加和的数值除以10后大于65535，ax不够保存商，此时会发生除法溢出；  
    *如果感兴趣可以参考王爽的《汇编语言》一书中实验10的2. 解决除法溢出的问题。（注意：MASM和NASM语法有些许差异）*
@@ -339,7 +339,9 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
 
 > 以检测点14.2为例，[0x0070 0000, 0x1 006F **E**FFF]此段空间不可访问，0x1 0000 0000\~0x1 006F **E**FFF这段部分溢出，从0x0开始，因此可访问的部分为[0x006F F000, 0x006F FFFF]
 ### 第14章习题
-1. 待续
+1. 见github源文件[xt14-2.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt14-2.asm)
+   > 个人觉得题目有点费解
+
 2. 描述符中的界限值应当是0xffffd
    > 0xffffd实际使用的段界限是0xffff dfff，设段基地址为0x10000，0xffff dfff+0x10000=0xe000，有效地址范围则为0xe000\~0xffff，共8KB
 # 第15章
