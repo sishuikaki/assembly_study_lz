@@ -339,7 +339,7 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
 
 > 以检测点14.2为例，[0x0070 0000, 0x1 006F **E**FFF]此段空间不可访问，0x1 0000 0000\~0x1 006F **E**FFF这段部分溢出，从0x0开始，因此可访问的部分为[0x006F F000, 0x006F FFFF]
 ### 第14章习题
-1. 见github源文件[xt14-2.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt14-2.asm)
+1. 见github源文件[xt14-1.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt14-1.asm)
    > 个人觉得题目有点费解
 
 2. 描述符中的界限值应当是0xffffd
