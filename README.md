@@ -345,3 +345,19 @@ Windows11可以在开始菜单或搜索框中输入“计算器”，然后在�
 2. 描述符中的界限值应当是0xffffd
    > 0xffffd实际使用的段界限是0xffff dfff，设段基地址为0x10000，0xffff dfff+0x10000=0xdfff，有效地址范围则为0xe000\~0xffff，共8KB
 # 第15章
+在内核（core）源代码中将第466行到第474行（建立程序堆栈段描述符）修改如下
+```x86asm
+;建立程序堆栈段描述符
+mov ecx,4096       ;分配4KB栈段空间
+call sys_routine_seg_sel:allocate_memory
+mov eax,ecx                        ;堆栈段起始线性地址
+mov ebx,4095                       ;段界限
+mov ecx,0x00409200                 ;字节粒度的堆栈段描述符
+call sys_routine_seg_sel:make_seg_descriptor
+call sys_routine_seg_sel:set_up_gdt_descriptor
+mov [edi+0x1c],cx
+```
+在用户程序（app）源代码中将堆栈段去除，程序头部的`section.stack.start`和`stack_end`可改为0，并将第67行中的`mov esp,stack_end`修改为`mov esp,4096`  
+
+详情见github源文件[xt15_core.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt15_core.asm)与[xt15_app.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt15_app.asm)
+# 第16章
