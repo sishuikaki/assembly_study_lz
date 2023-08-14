@@ -364,5 +364,5 @@ mov [edi+0x1c],cx
 ### 检测点16.1
 1. （ B ） （ A ）
 2. <ins>CPL=RPL=DPL</ins> &emsp; <ins>CPL≥DPL，RPL≥DPL</ins>
-3. <ins>2，3</ins>
+3. <ins>2和3</ins>
 ### 
