@@ -361,3 +361,8 @@ mov [edi+0x1c],cx
 
 详情见github源文件[xt15_core.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt15_core.asm)与[xt15_app.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt15_app.asm)
 # 第16章
+### 检测点16.1
+1. （ B ） （ A ）
+2. <ins>CPL=RPL=DPL</ins> &emsp; <ins>CPL≥DPL，PRL≥DPL</ins>
+3. <ins>2，3</ins>
+### 
