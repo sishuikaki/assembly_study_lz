@@ -1,3 +1,7 @@
+# assembly_study_lz
+（更新中）李忠《x86汇编语言：从实模式到保护模式》第2版检测点以及章节习题答案参考，欢迎通过 issues 或 Pull requests 提出建议和修改意见。
+# 目录
+未完待续
 # 第1章
 ### 检测点1.1
 - 13 &emsp; 15 &emsp; 78 &emsp; 255 &emsp; 128 &emsp; 56091
@@ -396,3 +400,9 @@ mov [edi+0x1c],cx
 
 >tips：在vscode中按<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>输入`compare active file with`可以将当前代码与其他代码比较
 # 第17章
+### 第17章习题
+略
+# 第18章
+### 第18章习题
+略
+# 第19章
