@@ -365,4 +365,34 @@ mov [edi+0x1c],cx
 1. （ B ） （ A ）
 2. <ins>CPL=RPL=DPL</ins> &emsp; <ins>CPL≥DPL，RPL≥DPL</ins>
 3. <ins>2和3</ins>
-### 
+### 检测点16.2
+1. <ins>CPL≥目标代码段描述符的DPL</ins> &emsp; <ins>CPL≤调用门描述符的DPL，RPL≤调用门描述符的DPL</ins>
+2. 调用门也可以安装在LDT中  
+   <ins>0x55</ins> &emsp; <ins>0x2fc0</ins> &emsp; <ins>2</ins> &emsp; <ins>1</ins>  
+   1≤CPL≤2，RPL≤2
+### 检测点16.3
+任务状态段TSS是在任务切换时，为了保护旧任务的状态，并在下次重新执行时恢复它们而设置的段，只会在任务切换时，才会读取新任务中的TSS的信息。
+
+图16-26的情况并不涉及任务切换，所以即使所有的段寄存器和通用寄存器的值都是0，也不影响任务的执行。
+
+> 任务状态段的说明详情见原书P284
+### 第16章习题
+1. 将`jmp far [fs:TerminateProgram]`改为`call far [fs:TerminateProgram]`即可
+   > 和c16_app.asm做法相同
+
+2. 见github源文件[xt16-2_core.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt16-2_core.asm)与[xt16-2_app.asm](https://github.com/sishuikaki/assembly_study_lz/blob/main/xt16-2_app.asm)  
+要点：  
+   - 由于其他例程的参数个数都为0，而只有读取硬盘扇区的例程参数个数为3，在安装调用门时不方便循环（代码清单16-1第829行开始），所以可以在SALT表中添加一个代表参数个数的位置，在循环时将参数个数传递给cx（代码清单16-1第836行）  
+   例如：  
+   在每个salt条目的结尾添加一字节的的位置来表示参数个数`db 参数个数`，循环时将参数传递给cx
+      ```x86asm
+      mov cx,[edi+262]              ;该条目的参数个数
+      or cx,1_11_0_1100_000_00000B  ;特权级3的调用门
+      ```
+
+   - 内核的read_hard_disk_0是用寄存器传递参数。  
+     要么修改read_hard_disk_0例程，并将内核调用read_hard_disk_0的地方都改为用栈传递参数；  
+     要么再添加一个专门用栈传递参数的例程，比如可以对代码清单16-1第148行的read_hard_disk_with_gate进行修改，这样只需要在app中用栈传递参数
+
+>tips：在vscode中按<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>输入`compare active file with`可以将当前代码与其他代码比较
+# 第17章
