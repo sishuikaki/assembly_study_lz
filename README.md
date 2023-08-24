@@ -1,5 +1,5 @@
 # assembly_study_lz
-（更新中）李忠《x86汇编语言：从实模式到保护模式》第2版检测点以及章节习题答案参考，欢迎通过 **Issues** 或 **Pull requests** 提出建议和修改意见。
+李忠《x86汇编语言：从实模式到保护模式》第2版检测点以及章节习题答案参考，欢迎通过 **Issues** 或 **Pull requests** 提出建议和修改意见。
 # 目录
 - [assembly\_study\_lz](#assembly_study_lz)
 - [目录](#目录)
